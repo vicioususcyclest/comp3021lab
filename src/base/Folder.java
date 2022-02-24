@@ -8,7 +8,7 @@ public class Folder {
 	private ArrayList<Note> notes;
 	private String name;
 	
-	public Folder (String name) {
+	public Folder(String name) {
 		this.name = name;
 		notes = new ArrayList<Note>();
 	}
