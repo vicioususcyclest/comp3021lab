@@ -33,13 +33,13 @@ public class Folder {
 		Folder other = (Folder) obj;
 		return Objects.equals(name, other.name);
 	}
+
 	@Override
 	public String toString() {
 		int nText = 0;
 		int nImage = 0;
 		
-		Note[] note = (Note[]) notes.toArray();
-		for (Note n : note)
+		for (Note n : notes)
 		{
 			if(n instanceof TextNote)
 				nText++;
@@ -47,21 +47,10 @@ public class Folder {
 					nImage++;
 
 		}
-		
-		/*
-		int k = notes.size();
-		int count;
-		
-		do {
-			if(note instanceof TextNote)
-				nText++;
-				else if(note instanceof ImageNote)
-					nImage++;
-			count++;
-		} while(count == k);*/
 			
 		return name + ":" + nText + ":" + nImage;
 	}
 }
+	
 
 
