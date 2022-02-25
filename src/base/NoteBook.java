@@ -40,9 +40,12 @@ public class NoteBook {
 				folders.add(newf);
 		}
 		for (Note n: f.getNotes()) {
-			if(Folder.name.equals(n.))
+			if(note.title.equals(n.title))
+				{System.out.println("Creating note "+note.getTitle()+" under folder" + f.getName() + " failed");
+				return false;}
 		}
-		if
+		f.getNotes().add(note);
+		return true;
 		
 	}
 

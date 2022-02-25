@@ -1,15 +1,20 @@
 package base;
 
+import java.util.ArrayList;
 import java.util.Objects;
 
 public class Note {
 	
-	private java.util.Date date;
-	private String title;
+	public java.util.Date date;
+	public String title;
 	
 	public Note(String title) {
 		this.title = title;
 		date = new java.util.Date(System.currentTimeMillis());
+	}
+	
+	public String getTitle(){
+		return title;
 	}
 
 	@Override
