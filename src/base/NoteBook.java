@@ -1,6 +1,7 @@
 package base;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
 
@@ -61,5 +62,12 @@ public class NoteBook {
 	public boolean createTextNote(String folderName, String title, String content) {
 		TextNote note = new TextNote(title, content);
 		return insertNote(folderName, note);
+	}
+	
+	public void sortFolders() {
+		for(Folder f3 : folders) {
+			f3.sortFolder();
+			Collections.sort(folders);
+		}
 	}
 }
