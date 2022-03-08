@@ -1,9 +1,13 @@
 package base;
 
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Objects;
+import java.util.Date;
+import java.util.List;
 
-public class Folder {
+
+public class Folder implements Comparable<Folder>{
 
 	private ArrayList<Note> notes;
 	private String name;
@@ -49,6 +53,94 @@ public class Folder {
 		}
 			
 		return name + ":" + nText + ":" + nImage;
+	}
+	@Override
+	public int compareTo(Folder o){
+		return name.compareTo(o.name);
+	}
+	
+	public void sortFolder() {
+		Collections.sort(notes);
+	}
+	
+	public List<Note> searchNotes(String keywords){
+		List<Note> notestemp = new ArrayList<Note>();
+		keywords = keywords.toLowerCase();
+		String[] keywordstemp = keywords.split("\\s+");
+		
+		int i = 0;
+		List<String> keyword_list = new ArrayList<String>();
+		
+		while (i < keywordstemp.length)
+		{
+			if (i < keywordstemp.length-2 && keywordstemp[i+1].equals("or"))
+			{
+				keyword_list.add(keywordstemp[i]+keywordstemp[i+2]);
+				i = i +3;
+			}
+			else
+			{
+				keyword_list.add(keywordstemp[i]);
+				i = i +1;
+			}
+		}
+		
+		
+		
+		
+		for (Note n : notes)
+		{	
+			String key1 = new String();
+			String key2 = new String();
+			boolean valid = true;
+			for(String k:keyword_list) {
+				
+				if(k.contains("//s+"))
+				{
+					key1 = k.substring(0,k.indexOf("//s+"));
+					key2 = k.substring(k.indexOf("//s+")+1);
+					if(n instanceof TextNote) 
+					{
+						if(n.title.contains(key1) == true || n.title.contains(key2) == true)
+						{
+							notestemp.add(n);
+						}
+						else if (((TextNote)n).content.contains(key1) == true || ((TextNote)n).content.contains(key2) == true)
+						{
+							notestemp.add(n);
+						}
+					}
+					else if(n instanceof ImageNote)
+						if(n.title.contains(key1) == true || n.title.contains(key2) == true)
+						{
+							notestemp.add(n);
+						}
+				}
+				else {
+						if(n instanceof TextNote) 
+						{
+							if(n.title.contains(k) == true)
+							{
+								notestemp.add(n);
+							}
+							else if (((TextNote)n).content.contains(k) == true)
+							{
+								notestemp.add(n);
+							}
+						}
+						else if(n instanceof ImageNote) {
+							if(n.title.contains(k) == true)
+							{
+								notestemp.add(n);
+							}
+						}
+					}
+					
+				
+				}
+			}
+		
+		return notestemp;
 	}
 }
 	
