@@ -67,7 +67,7 @@ public class NoteBook {
 	public void sortFolders() {
 		for(Folder f3 : folders) {
 			f3.sortFolder();
-			Collections.sort(folders);
 		}
+		Collections.sort(folders);
 	}
 }

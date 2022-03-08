@@ -1,6 +1,7 @@
 package base;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Date;
@@ -66,7 +67,7 @@ public class Folder implements Comparable<Folder>{
 	public List<Note> searchNotes(String keywords){
 		List<Note> notestemp = new ArrayList<Note>();
 		keywords = keywords.toLowerCase();
-		String[] keywordstemp = keywords.split("\\s+");
+		String[] keywordstemp = keywords.split(" ");
 		
 		int i = 0;
 		List<String> keyword_list = new ArrayList<String>();
@@ -75,7 +76,7 @@ public class Folder implements Comparable<Folder>{
 		{
 			if (i < keywordstemp.length-2 && keywordstemp[i+1].equals("or"))
 			{
-				keyword_list.add(keywordstemp[i]+keywordstemp[i+2]);
+				keyword_list.add(keywordstemp[i]+" "+keywordstemp[i+2]);
 				i = i +3;
 			}
 			else
@@ -85,57 +86,82 @@ public class Folder implements Comparable<Folder>{
 			}
 		}
 		
-		
-		
-		
 		for (Note n : notes)
 		{	
 			String key1 = new String();
 			String key2 = new String();
-			boolean valid = true;
+			
 			for(String k:keyword_list) {
 				
-				if(k.contains("//s+"))
+				if(k.contains(" "))
 				{
-					key1 = k.substring(0,k.indexOf("//s+"));
-					key2 = k.substring(k.indexOf("//s+")+1);
+					key1 = k.substring(0,k.indexOf(" "));
+					key2 = k.substring(k.indexOf(" ")+1);
 					if(n instanceof TextNote) 
 					{
-						if(n.title.contains(key1) == true || n.title.contains(key2) == true)
+						if(n.title.toLowerCase().contains(key1) == true || n.title.toLowerCase().contains(key2) == true)
 						{
-							notestemp.add(n);
+							if(k.compareTo(keyword_list.get(keyword_list.size()-1)) == 0)
+							{
+								notestemp.add(n);
+							}
+							else continue;	
 						}
-						else if (((TextNote)n).content.contains(key1) == true || ((TextNote)n).content.contains(key2) == true)
+						else if (((TextNote)n).content.toLowerCase().contains(key1) == true || ((TextNote)n).content.toLowerCase().contains(key2) == true)
 						{
-							notestemp.add(n);
+							if(k.compareTo(keyword_list.get(keyword_list.size()-1)) == 0)
+							{
+								notestemp.add(n);
+							}
+							else continue;	
 						}
+						else break;
 					}
 					else if(n instanceof ImageNote)
-						if(n.title.contains(key1) == true || n.title.contains(key2) == true)
+						if(n.title.toLowerCase().contains(key1) == true || n.title.toLowerCase().contains(key2) == true)
 						{
-							notestemp.add(n);
+							if(k.compareTo(keyword_list.get(keyword_list.size()-1)) == 0)
+							{
+								notestemp.add(n);
+							}
+							else continue;	
 						}
+						else break;
 				}
 				else {
 						if(n instanceof TextNote) 
 						{
-							if(n.title.contains(k) == true)
+							if(n.title.toLowerCase().contains(k) == true)
 							{
-								notestemp.add(n);
+								if(k.compareTo(keyword_list.get(keyword_list.size()-1)) == 0)
+								{
+									notestemp.add(n);
+								}
+								else continue;	
 							}
-							else if (((TextNote)n).content.contains(k) == true)
+							else if (((TextNote)n).content.toLowerCase().contains(k) == true)
 							{
-								notestemp.add(n);
+								if(k.compareTo(keyword_list.get(keyword_list.size()-1)) == 0)
+								{
+									notestemp.add(n);
+								}
+								else continue;	
 							}
+							else break;
 						}
 						else if(n instanceof ImageNote) {
-							if(n.title.contains(k) == true)
+							if(n.title.toLowerCase().contains(k) == true)
 							{
-								notestemp.add(n);
+								if(k.compareTo(keyword_list.get(keyword_list.size()-1)) == 0)
+								{
+									notestemp.add(n);
+								}
+								else continue;	
 							}
+							else break;
 						}
 					}
-					
+			
 				
 				}
 			}
