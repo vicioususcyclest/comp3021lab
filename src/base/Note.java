@@ -4,10 +4,11 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.Objects;
 
-public class Note implements Comparable<Note>{
+public class Note implements Comparable<Note>,java.io.Serializable{
 	
 	public java.util.Date date;
 	public String title;
+	private static final long serialVersionUID = 1L;
 	
 	public Note(String title) {
 		this.title = title;
