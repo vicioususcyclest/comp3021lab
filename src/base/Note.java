@@ -1,10 +1,11 @@
 package base;
 
 import java.util.ArrayList;
+import java.io.Serializable;
 import java.util.Date;
 import java.util.Objects;
 
-public class Note implements Comparable<Note>,java.io.Serializable{
+public class Note implements Comparable<Note>,Serializable{
 	
 	public java.util.Date date;
 	public String title;

@@ -8,15 +8,31 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.Serializable;
 
-
-public class NoteBook implements java.io.Serializable  {
-
-	private ArrayList<Folder> folders;
+public class NoteBook implements Serializable  {
+	
 	private static final long serialVersionUID = 1L;
+	private ArrayList<Folder> folders;
 	
 	public NoteBook() {
 		folders = new ArrayList<Folder>();
+	}
+	
+	public NoteBook(String file) {
+		FileInputStream fis = null;
+		ObjectInputStream in = null;
+		try {
+			fis = new FileInputStream(file);
+			in = new ObjectInputStream(fis);
+			//System.out.println(in.readObject());
+            NoteBook n = (NoteBook) in.readObject();
+			//NoteBook n = new NoteBook();
+            in.close(); 
+            folders = n.folders;
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
 	}
 	
 	public boolean createTextNote(String folderName ,String title) {
@@ -83,7 +99,7 @@ public class NoteBook implements java.io.Serializable  {
 		try {
 		fos = new FileOutputStream(file);
 		out = new ObjectOutputStream(fos);
-		out.writeObject(folders);
+		out.writeObject(this);
 		out.close();
 		}catch(Exception e){
 		    e.printStackTrace();
@@ -92,17 +108,5 @@ public class NoteBook implements java.io.Serializable  {
 		return true;
 	}
 	
-	public NoteBook(String file) {
-	    FileInputStream fis = null;
-	    ObjectInputStream in = null;
-		try {
-            fis = new FileInputStream(file);
-            in = new ObjectInputStream(fis);
-            NoteBook n =(NoteBook) in.readObject();
-            in.close();
-		}catch(Exception e) {
-			e.printStackTrace();
-		}
-		}
-	}
+
 }
